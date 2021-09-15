@@ -8,7 +8,7 @@
 
 ```hcl
 module "bucket" {
-  source     = "../modules/gcs"
+  source     = "github.com/dapperlabs-platform/terraform-google-gcs?ref=tag"
   project_id = "myproject"
   prefix     = "test"
   name       = "my-bucket"
