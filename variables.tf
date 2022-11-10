@@ -84,6 +84,24 @@ variable "retention_policy" {
   default = null
 }
 
+variable "lifecycle_rule" {
+  description = "Bucket lifecycle rule."
+  type = object({
+    action = object({
+      type          = string
+      storage_class = string
+    })
+    condition = object({
+      age                = optional(number)
+      created_before     = optional(string)
+      num_newer_versions = optional(number)
+      with_state         = optional(string)
+    })
+  })
+  default = null
+}
+
+
 variable "storage_class" {
   description = "Bucket storage class."
   type        = string
