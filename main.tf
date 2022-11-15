@@ -70,22 +70,6 @@ resource "google_storage_bucket" "bucket" {
       max_age_seconds = max(3600, var.cors.max_age_seconds)
     }
   }
-
-  dynamic "lifecycle_rule" {
-    for_each = var.lifecycle_rule == null ? [] : [""]
-    content {
-      action {
-        type          = var.lifecycle_rule.action.type          // "Delete" or "SetStorageClass"
-        storage_class = var.lifecycle_rule.action.storage_class // "NEARLINE", "COLDLINE", "ARCHIVE", or "STANDARD"
-      }
-      condition {
-        age                = var.lifecycle_rule.condition.age                // number of days
-        created_before     = var.lifecycle_rule.condition.created_before     // RFC 3339 date/time string
-        num_newer_versions = var.lifecycle_rule.condition.num_newer_versions // number of versions
-        with_state         = var.lifecycle_rule.condition.with_state         // "LIVE", "ARCHIVED", or "ANY"
-      }
-    }
-  }
 }
 
 resource "google_storage_bucket_iam_binding" "bindings" {
