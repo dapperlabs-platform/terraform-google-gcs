@@ -89,7 +89,7 @@ variable "lifecycle_rule" {
   type = object({
     action = object({
       type          = string
-      storage_class = string
+      storage_class = optional(string)
     })
     condition = object({
       age                = optional(number)
