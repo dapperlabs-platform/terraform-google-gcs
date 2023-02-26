@@ -89,13 +89,13 @@ variable "lifecycle_rule" {
   type = object({
     action = object({
       type          = string
-      storage_class = optional(string)
+      storage_class = optional(string, null)
     })
     condition = object({
-      age                = optional(number)
-      created_before     = optional(string)
-      num_newer_versions = optional(number)
-      with_state         = optional(string)
+      age                = optional(number, null)
+      created_before     = optional(string, null)
+      num_newer_versions = optional(number, null)
+      with_state         = optional(string, null)
     })
   })
   default = null
