@@ -40,7 +40,7 @@ resource "google_storage_bucket" "bucket" {
     location      = lower(var.location)
     storage_class = lower(var.storage_class)
   })
-  
+
   dynamic "encryption" {
     for_each = var.encryption_key == null ? [] : [""]
 
