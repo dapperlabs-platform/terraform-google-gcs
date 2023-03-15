@@ -30,9 +30,6 @@ resource "google_storage_bucket" "bucket" {
   public_access_prevention    = var.public_access_prevention
   force_destroy               = var.force_destroy
   uniform_bucket_level_access = var.uniform_bucket_level_access
-  autoclass {
-    enabled = var.autoclass
-  }
   versioning {
     enabled = var.versioning
   }
@@ -40,6 +37,13 @@ resource "google_storage_bucket" "bucket" {
     location      = lower(var.location)
     storage_class = lower(var.storage_class)
   })
+
+  dynamic "autoclass" {
+    count = var.autoclass ? 1 : 0
+    content {
+      enabled = var.autoclass
+    }
+  }
 
   dynamic "encryption" {
     for_each = var.encryption_key == null ? [] : [""]

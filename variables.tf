@@ -130,7 +130,7 @@ variable "cors" {
 }
 
 variable "autoclass" {
-  description = "Automatically transitions objects in your bucket to appropriate storage classes based on each object's access pattern."
+  description = "Automatically transitions objects in your bucket to appropriate storage classes based on each object's access pattern.  Defaults to false."
   type        = bool
   default     = false
 }
