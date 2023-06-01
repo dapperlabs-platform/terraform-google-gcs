@@ -20,6 +20,15 @@ locals {
     ? ""
     : join("-", [var.prefix, lower(var.location), ""])
   )
+  iam_roles = merge([
+    for role_name, members in var.iam : {
+      for member in members :
+      "${role_name}-${member}" => {
+        role_name = role_name
+        member    = member
+      }
+    }
+  ]...)
 }
 
 resource "google_storage_bucket" "bucket" {
@@ -96,9 +105,9 @@ resource "google_storage_bucket" "bucket" {
   }
 }
 
-resource "google_storage_bucket_iam_binding" "bindings" {
-  for_each = var.iam
+resource "google_storage_bucket_iam_member" "members" {
+  for_each = local.iam_roles
   bucket   = google_storage_bucket.bucket.name
-  role     = each.key
-  members  = each.value
+  role     = each.value.role_name
+  member   = each.value.member
 }
