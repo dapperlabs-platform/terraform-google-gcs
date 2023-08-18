@@ -61,30 +61,57 @@ module "bucket" {
 ```
 
 <!-- BEGIN TFDOC -->
-## Variables
+## Requirements
 
-| name | description | type | required | default |
-|---|---|:---: |:---:|:---:|
-| name | Bucket name suffix. | <code title="">string</code> | ✓ |  |
-| project_id | Bucket project id. | <code title="">string</code> | ✓ |  |
-| *cors* | CORS configuration for the bucket. Defaults to null. | <code title="object&#40;&#123;&#10;origin          &#61; list&#40;string&#41;&#10;method          &#61; list&#40;string&#41;&#10;response_header &#61; list&#40;string&#41;&#10;max_age_seconds &#61; number&#10;&#125;&#41;">object({...})</code> |  | <code title="">null</code> |
-| *encryption_key* | KMS key that will be used for encryption. | <code title="">string</code> |  | <code title="">null</code> |
-| *force_destroy* | Optional map to set force destroy keyed by name, defaults to false. | <code title="">bool</code> |  | <code title="">false</code> |
-| *iam* | IAM bindings in {ROLE => [MEMBERS]} format. | <code title="map&#40;list&#40;string&#41;&#41;">map(list(string))</code> |  | <code title="">{}</code> |
-| *labels* | Labels to be attached to all buckets. | <code title="map&#40;string&#41;">map(string)</code> |  | <code title="">{}</code> |
-| *location* | Bucket location. | <code title="">string</code> |  | <code title="">EU</code> |
-| *logging_config* | Bucket logging configuration. | <code title="object&#40;&#123;&#10;log_bucket        &#61; string&#10;log_object_prefix &#61; string&#10;&#125;&#41;">object({...})</code> |  | <code title="">null</code> |
-| *prefix* | Prefix used to generate the bucket name. | <code title="">string</code> |  | <code title="">null</code> |
-| *retention_policy* | Bucket retention policy. | <code title="object&#40;&#123;&#10;retention_period &#61; number&#10;is_locked        &#61; bool&#10;&#125;&#41;">object({...})</code> |  | <code title="">null</code> |
-| *storage_class* | Bucket storage class. | <code title="">string</code> |  | <code title="MULTI_REGIONAL&#10;validation &#123;&#10;condition     &#61; contains&#40;&#91;&#34;STANDARD&#34;, &#34;MULTI_REGIONAL&#34;, &#34;REGIONAL&#34;, &#34;NEARLINE&#34;, &#34;COLDLINE&#34;, &#34;ARCHIVE&#34;&#93;, var.storage_class&#41;&#10;error_message &#61; &#34;Storage class must be one of STANDARD, MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE, ARCHIVE.&#34;&#10;&#125;">...</code> |
-| *uniform_bucket_level_access* | Allow using object ACLs (false) or not (true, this is the recommended behavior) , defaults to true (which is the recommended practice, but not the behavior of storage API). | <code title="">bool</code> |  | <code title="">true</code> |
-| *versioning* | Enable versioning, defaults to false. | <code title="">bool</code> |  | <code title="">false</code> |
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.8 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | >= 4.55 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_google"></a> [google](#provider\_google) | >= 4.55 |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [google_storage_bucket.bucket](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket) | resource |
+| [google_storage_bucket_iam_member.members](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_iam_member) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_autoclass"></a> [autoclass](#input\_autoclass) | Automatically transitions objects in your bucket to appropriate storage classes based on each object's access pattern.  Defaults to false. | `bool` | `false` | no |
+| <a name="input_cors"></a> [cors](#input\_cors) | CORS configuration for the bucket. Defaults to a standard value. | `any` | <pre>[<br>  {<br>    "max_age_seconds": 3600,<br>    "method": [<br>      "GET",<br>      "HEAD",<br>      "OPTIONS"<br>    ],<br>    "origin": [<br>      "*"<br>    ],<br>    "response_header": [<br>      "*"<br>    ]<br>  }<br>]</pre> | no |
+| <a name="input_encryption_key"></a> [encryption\_key](#input\_encryption\_key) | KMS key that will be used for encryption. | `string` | `null` | no |
+| <a name="input_force_destroy"></a> [force\_destroy](#input\_force\_destroy) | Optional map to set force destroy keyed by name, defaults to false. | `bool` | `false` | no |
+| <a name="input_iam"></a> [iam](#input\_iam) | IAM bindings in {ROLE => [MEMBERS]} format. | `map(list(string))` | `{}` | no |
+| <a name="input_labels"></a> [labels](#input\_labels) | Labels to be attached to all buckets. | `map(string)` | `{}` | no |
+| <a name="input_lifecycle_rule"></a> [lifecycle\_rule](#input\_lifecycle\_rule) | Bucket lifecycle rule. | <pre>object({<br>    action = object({<br>      type          = string<br>      storage_class = optional(string, null)<br>    })<br>    condition = object({<br>      age                = optional(number, null)<br>      created_before     = optional(string, null)<br>      num_newer_versions = optional(number, null)<br>      with_state         = optional(string, null)<br>    })<br>  })</pre> | `null` | no |
+| <a name="input_location"></a> [location](#input\_location) | Bucket location. | `string` | `"EU"` | no |
+| <a name="input_logging_config"></a> [logging\_config](#input\_logging\_config) | Bucket logging configuration. | <pre>object({<br>    log_bucket        = string<br>    log_object_prefix = string<br>  })</pre> | `null` | no |
+| <a name="input_name"></a> [name](#input\_name) | Bucket name suffix. | `string` | n/a | yes |
+| <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix used to generate the bucket name. | `string` | `null` | no |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Bucket project id. | `string` | n/a | yes |
+| <a name="input_public_access_prevention"></a> [public\_access\_prevention](#input\_public\_access\_prevention) | Prevents public access to a bucket. Acceptable values are inherited or enforced. If inherited, the bucket uses public access prevention, only if the bucket is subject to the public access prevention organization policy constraint. | `string` | `"inherited"` | no |
+| <a name="input_retention_policy"></a> [retention\_policy](#input\_retention\_policy) | Bucket retention policy. | <pre>object({<br>    retention_period = number<br>    is_locked        = bool<br>  })</pre> | `null` | no |
+| <a name="input_storage_class"></a> [storage\_class](#input\_storage\_class) | Bucket storage class. | `string` | `"MULTI_REGIONAL"` | no |
+| <a name="input_uniform_bucket_level_access"></a> [uniform\_bucket\_level\_access](#input\_uniform\_bucket\_level\_access) | Allow using object ACLs (false) or not (true, this is the recommended behavior) , defaults to true (which is the recommended practice, but not the behavior of storage API). | `bool` | `true` | no |
+| <a name="input_versioning"></a> [versioning](#input\_versioning) | Enable versioning, defaults to false. | `bool` | `false` | no |
 
 ## Outputs
 
-| name | description | sensitive |
-|---|---|:---:|
-| bucket | Bucket resource. |  |
-| name | Bucket name. |  |
-| url | Bucket URL. |  |
+| Name | Description |
+|------|-------------|
+| <a name="output_bucket"></a> [bucket](#output\_bucket) | Bucket resource. |
+| <a name="output_name"></a> [name](#output\_name) | Bucket name. |
+| <a name="output_url"></a> [url](#output\_url) | Bucket URL. |
 <!-- END TFDOC -->
