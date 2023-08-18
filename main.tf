@@ -79,12 +79,12 @@ resource "google_storage_bucket" "bucket" {
   }
 
   dynamic "cors" {
-    for_each = var.cors == null ? [] : [""]
+    for_each = var.cors
     content {
-      origin          = var.cors.origin
-      method          = var.cors.method
-      response_header = var.cors.response_header
-      max_age_seconds = max(3600, var.cors.max_age_seconds)
+      origin          = lookup(cors.value, "origin", null)
+      method          = lookup(cors.value, "method", null)
+      response_header = lookup(cors.value, "response_header", null)
+      max_age_seconds = lookup(cors.value, "max_age_seconds", null)
     }
   }
 
