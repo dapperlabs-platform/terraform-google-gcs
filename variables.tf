@@ -119,14 +119,16 @@ variable "versioning" {
 }
 
 variable "cors" {
-  description = "CORS configuration for the bucket. Defaults to null."
-  type = object({
-    origin          = list(string)
-    method          = list(string)
-    response_header = list(string)
-    max_age_seconds = number
-  })
-  default = null
+  description = "CORS configuration for the bucket. Defaults to a standard value."
+  type        = any
+  default = [
+    {
+      origin          = ["*"]
+      method          = ["GET", "HEAD", "OPTIONS"]
+      response_header = ["*"]
+      max_age_seconds = 3600
+    }
+  ]
 }
 
 variable "autoclass" {
