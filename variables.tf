@@ -92,10 +92,17 @@ variable "lifecycle_rule" {
       storage_class = optional(string, null)
     })
     condition = object({
-      age                = optional(number, null)
-      created_before     = optional(string, null)
-      num_newer_versions = optional(number, null)
-      with_state         = optional(string, null)
+      age                        = optional(number, null)
+      created_before             = optional(string, null)
+      with_state                 = optional(string, null)
+      matches_storage_class      = optional(string, null)
+      matches_prefix             = optional(string, null)
+      matches_suffix             = optional(string, null)
+      num_newer_versions         = optional(number, null)
+      custom_time_before         = optional(string, null)
+      days_since_custom_time     = optional(number, null)
+      days_since_noncurrent_time = optional(number, null)
+      noncurrent_time_before     = optional(string, null)
     })
   })
   default = null
@@ -141,4 +148,15 @@ variable "public_access_prevention" {
   description = "Prevents public access to a bucket. Acceptable values are inherited or enforced. If inherited, the bucket uses public access prevention, only if the bucket is subject to the public access prevention organization policy constraint."
   type        = string
   default     = "inherited"
+}
+
+variable "default_event_based_hold" {
+  description = "Enable event based hold to new objects added to specific bucket. Defaults to false."
+  type        = bool
+  default     = false
+}
+
+variable "retention_duration_seconds" {
+  description = "The duration in seconds that soft-deleted objects in the bucket will be retained and cannot be permanently deleted. Default value is 604800."
+  type        = number
 }
