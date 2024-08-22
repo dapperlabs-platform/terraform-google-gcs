@@ -142,3 +142,14 @@ variable "public_access_prevention" {
   type        = string
   default     = "inherited"
 }
+
+variable "default_event_based_hold" {
+  description = "Enable event based hold to new objects added to specific bucket. Defaults to false."
+  type        = bool
+  default     = false
+}
+
+variable "retention_duration_seconds" {
+  description = "The duration in seconds that soft-deleted objects in the bucket will be retained and cannot be permanently deleted. Default value is 604800."
+  type        = number
+}
