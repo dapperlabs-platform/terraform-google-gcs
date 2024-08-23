@@ -80,13 +80,13 @@ limitations under the License.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.8 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | >= 4.55 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | >= 4.55 |
+| <a name="provider_google"></a> [google](#provider\_google) | ~> 5.0 |
 
 ## Modules
 
