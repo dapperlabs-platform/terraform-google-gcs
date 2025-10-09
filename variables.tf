@@ -159,4 +159,5 @@ variable "default_event_based_hold" {
 variable "retention_duration_seconds" {
   description = "The duration in seconds that soft-deleted objects in the bucket will be retained and cannot be permanently deleted. Default value is 604800."
   type        = number
+  default     = 604800
 }
