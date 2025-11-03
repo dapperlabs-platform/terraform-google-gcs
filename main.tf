@@ -126,4 +126,6 @@ resource "google_storage_bucket_iam_member" "members" {
   bucket   = google_storage_bucket.bucket.name
   role     = each.value.role_name
   member   = each.value.member
+
+  timeouts {}
 }
